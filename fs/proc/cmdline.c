@@ -56,6 +56,11 @@ static int __init proc_cmdline_init(void)
 	 */
 	remove_safetynet_flags(new_command_line);
 
+	/* Remove androidboot.mode from command line.
+	 * SafetyNet sometimes fails if the current bootmode is 'fastboot'
+	 */
+	remove_flag(new_command_line, "androidboot.mode=");
+
 	proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
 	return 0;
 }
